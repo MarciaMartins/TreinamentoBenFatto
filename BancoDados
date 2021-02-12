@@ -1,0 +1,86 @@
+# TREINAMENTO BEN FATTO BANCO DE DADOS
+Projeto RH 
+
+Autora: Márcia P. Martins
+
+### Exercício Proposto
+
+* Cadastro de Departamento;
+* Cadastro de Funcionário e Alocação;
+
+### Conceitos revisitados durante o curso
+
+# Chave Primária
+  A chave primária (primary key/PK) identificador único da tabela. PK são a chave para relacionamento entre tabelas. 
+  Principais pontos: 
+    - Não podem ser nulas;
+    - Cada registro deve possuir uma chave única;
+    - Para garantia da unicidade, e interessante que o valor seja gerado automaticamente pelo banco, mas não e obrigatória tal implementação. 
+
+# Chave Estrangeira 
+  A chave estrangeira (foreign key/FK) é uma referência a uma chave primária de outra tabela, ela representa o relacionamento entre tabelas
+  Principais pontos:
+  - Podem ser nulas, dependendo da regra do negócio de cada banco;
+  - Pode se ter mais de uma FK na mesma tabela. 
+  
+# Constraints
+   São restrições estabelecidas para uma coluna do banco de dados. Método para validar a integridade dos dados. 
+   Tipos de constraints:
+   - PK - índice único para um conjunto de colunas ou uma coluna;
+   - Unique - coluna não poderá ter duas linhas com o mesmo valor;
+   - FK - determina uma coluna ou um conjunto de colunas que possuem valores em outras tabelas, referente a uma referência ou um relacionamento;
+   - Check - especifica a condição que a coluna precisa para salvar o registro;
+   - Not Null - determina que a coluna tem preenchimento obrigatório. 
+ 
+
+### Tabela de Departamento 
+Considerações gerais sobre a estruturação da tabela Departamento:
+- Departamento pode ter um ou vários funcionários vinculados. 
+1. Criação da tabela 
+      CREATE TABLE bf_dept(
+          id_dept NUMBER(2) NOT NULL,
+          nome_dept VARCHAR2(50),
+          loc_dept VARCHAR2(30)
+      );
+      
+2.Alteração da tabela para a criação da chave primária
+      ALTER TABLE bf_dept 
+      ADD CONSTRAINT PK_DEPT
+      PRIMARY KEY(id_dept);
+      
+      
+
+### Tabela de Funcionário
+Considerações gerais sobre a estruturação da tabela Funcionário:
+- Funcionário pertence a um departamento. 
+
+1. Criação da Tabela
+      CREATE TABLE bf_func(
+          id_func NUMBER(2) NOT NULL,
+          nome_func VARCHAR2(50),
+          id_dept NUMBER(2)
+      );
+
+2.Alteração da tabela para a criação da chave primária
+    ALTER TABLE bf_func
+    ADD CONSTRAINT pk_func
+    PRIMARY KEY(id_func);
+         
+3.Alteração da tabela para a criação da chave estrangeira
+    ALTER TABLE bf_func
+    ADD CONSTRAINT fk_id_dept
+    FOREIGN KEY(id_dept)
+    REFERENCES bf_dept(id_dept);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    Referências:
+     Material BenFatto;
+     https://www.devmedia.com.br/
+    
