@@ -72,85 +72,77 @@ Autora: Márcia P. Martins
     FOREIGN KEY(id_dept)
     REFERENCES bf_dept(id_dept);
     
-4. Alteração da tabela para a inclusão de novos campos para possibilitar o trabalho com diferentes tipos de dados
-## Tabela de departamento 
-  4.1. Criação do campo responsável, o campo será uma referência a um funcionário.
-   ALTER TABLE bf_dept ADD responsavel NUMBER(2) NULL;      
-
-## Tabela de Funcionário
-  4.2. Criação do campo data de contratação, data de desligamento do funcionário, data de nascimento.
-    ALTER TABLE bf_func ADD data_contratacao DATE; 
-    ALTER TABLE bf_func ADD data_desligamento DATE;
-    ALTER TABLE bf_func ADD data_nascimento DATE;
- - Criação do campo cpf. 
-    ALTER TABLE bf_func ADD cpf NUMBER(11) NOT NULL;
-
-    
-5. Comandos Data Manipulation Language(DML) 
-  5.1. Insert: utilizado para cadastrar dados na tabela, inserindo uma linha de dados quando executado com sucesso. 
+4. Comandos Data Manipulation Language(DML) 
+    4.1. INSERT: utilizado para cadastrar dados na tabela, inserindo uma linha de dados quando executado com sucesso. 
           
-          INSERT INTO [NOME_TABELA] ([NOME_CAMPO01],... , [NOME_CAMPO0N]) VALUES ([VALOR_NOME_CAMPO01],... , [VALOR_NOME_CAMPO0N]);
+          INSERT INTO bf_dept(id_dept, nome_dept,loc_dept) 
+          VALUES (1,'RH','CPS');
+         
+    Problemas que podem ocorrer com a tentativa de inserção de dados: 
+       4.1.1. CHAVE PRIMÁRIA REPETIDA - Tentativa de Inserção de dados 
+          Não é possível tentar inserir dados na tabela informando o mesmo número de chave primária(PK), mesmo que os demais dados não se repitam. 
+          INSERT INTO bf_dept(id_dept, nome_dept,loc_dept) 
+          VALUES (1,'RH','RIO DE JANEIRO');
+
+          Relatório de erros - ORA-00001: restrição exclusiva (SYSTEM.PK_DEPT) violada
+
+       4.1.2. CADASTRO DE DEPARTAMENTO INEXISTENTE - Inserção de dados para um funcionário com  
+          Não é possível inserir um novo funcionário com identificador de departamento inexistente, temos como retorno uma restrição de integridade.Nesse exemplo id_dept=7, 
+         não existe na base de dados. 
+          INSERT INTO bf_func(id_func, nome_func,id_dept,cpf,data_contratacao,data_desligamento,data_nascimento)
+          VALUES (6, 'Nome do funcionario', 6, '55555555555',to_date('01/01/2020'),to_date('01/01/2021'),to_date('11/09/2000'))
+
+          Relatório de erros - ORA-02291: restrição de integridade (SYSTEM.FK_ID_DEPT) violada - chave mãe não localizada
+          (chave mão não localizada - PK na tabela de departamento inexistente)
    
-      5.1.1. Exemplo de inserção de dados nas tabelas
-       ## Tabela de departamento 
-        INSERT INTO bf_dept(id_dept, nome_dept,loc_dept) 
-        VALUES (1,'RH','CPS');
-           
-        ## Tabela de departamento 
-        INSERT INTO bf_func(id_func, nome_func,id_dept,cpf,data_contratacao,data_desligamento,data_nascimento) 
-        VALUES(1,'MICHAEL',4,'11111111111',to_date('10/09/2000'),NULL,to_date('25/09/2000'));
-
-     5.1.2. Inserção de dados REPETINDO CHAVE PRIMÁRIA 
-        Não é possível tentar inserir dados na tabela informando o mesmo número de chave primária(PK), mesmo que os demais dados não se repitam. 
-        INSERT INTO bf_dept(id_dept, nome_dept,loc_dept) 
-        VALUES (1,'RH','RIO DE JANEIRO');
-
-        Relatório de erros - ORA-00001: restrição exclusiva (SYSTEM.PK_DEPT) violada
+     
+    4.2. UPDATE: utilizado para atualizar um ou mais valores de uma coluna em uma linha ou um conjunto de linhas em uma tabela.
+        Cláusula WHERE: serve para distinguir as linhas que serão atualizadas, criando uma condição para a atulização. 
+            UPDATE bf_dept
+            SET responsavel = 'MICHAEL'
+            WHERE id_dept=1;
         
-     5.1.3. Inserção de dados para um funcionário com CADASTRO DE DEPARTAMENTO INEXISTENTE 
-        Não é possível inserir um novo funcionário com identificador de departamento inexistente, temos como retorno uma restrição de integridade.Nesse exemplo id_dept=7, 
-       não existe na base de dados. 
-        INSERT INTO bf_func(id_func, nome_func,id_dept,cpf,data_contratacao,data_desligamento,data_nascimento)
-        VALUES (6, 'Nome do funcionario', 6, '55555555555',to_date('01/01/2020'),to_date('01/01/2021'),to_date('11/09/2000'))
-
-        Relatório de erros - ORA-02291: restrição de integridade (SYSTEM.FK_ID_DEPT) violada - chave mãe não localizada
-        (chave mão não localizada - PK na tabela de departamento inexistente)
-   
-    5.2. Update: utilizado para atualizar um ou mais valores de uma coluna em uma linha ou um conjunto de linhas em uma tabela.
-        Clausula WHERE: serve para distinguir as linhas que serão atualizadas, criando uma condição para a atulização. 
+    4.3. DELETE: permite a exclusão de uma ou várias linhas de informações.
+        Cláusula WHERE: serve para distinguir as linhas que serão deletadas, criando uma condição para a atulização. 
         
-        ALTER TABLE [NOME_TABELA] SET [NOME_CAMPO02] = [NOVO_VALOR] WHERE [NOME_CAMPO01] = VALOR;
-        *Conforme item realizado no item 4
-        
-    5.3. Delete: permite a exclusão de uma ou várias linhas de informações.
-        Clausula WHERE: serve para distinguir as linhas que serão deletadas, criando uma condição para a atulização. 
-        
-        DELETE FROM [NOME_TABELA] WHERE [NOME_CAMPO01] = VALOR;
+        DELETE bf_func WHERE id_func=5;
     
-    5.4. Select: permite a busca os dados em uma ou mais tabelas, podendo ser utilizado a condição JOIN para agrupar as tabelas que queremos o retorno. 
+    4.4. SELECT: permite a busca os dados em uma ou mais tabelas, podendo ser utilizado a condição JOIN para agrupar as tabelas que queremos o retorno. 
         Clausula WHERE: serve para distinguir as linhas que serão retornadas. 
         
-        SELECT * FROM [NOME_TABELA] WHERE [NOME_CAMPO01] = VALOR;
+        SELECT * FROM bf_dept 
+        WHERE id_dept=2;
+       
+     
+  5. Comandos Data Definition Language(DDL)   
+    5.1. ALTER: possibilita a alteração da tabela para a inclusão de novos campos.
+        5.1.1. Criação do campo responsável, o campo será uma referência a um funcionário. (## Tabela de departamento )
+          ALTER TABLE bf_dept ADD responsavel VARCHAR2(50) NULL;      
+
+        5.1.2. Criação do campo data de contratação, data de desligamento do funcionário, data de nascimento, cpf. (## Tabela de Funcionário)
+          ALTER TABLE bf_func ADD data_contratacao DATE; 
+          ALTER TABLE bf_func ADD data_desligamento DATE;
+          ALTER TABLE bf_func ADD data_nascimento DATE;
+          ALTER TABLE bf_func ADD cpf NUMBER(11) NOT NULL;  
     
-  6. Comandos Data Definition Language(DDL)   
-    6.1. Truncate: tem função muito parecida com o DELETE, porém sem a possibilidade de recuperar os dados uma vez deletados. Não possui cláusula WHERE, 
+    5.2. Truncate: tem função muito parecida com o DELETE, porém sem a possibilidade de recuperar os dados uma vez deletados. Não possui cláusula WHERE, 
    porque deleta todos os registros.           
         
         TRUNCATE TABLE [NOME_TABELA]
         
-    6.2. SavePoint: ponto de rollback, possibilitando a criação de uma marca especifica para retrono apenas de partes do processo.            
+    5.3. SavePoint: ponto de rollback, possibilitando a criação de uma marca especifica para retrono apenas de partes do processo.            
         
-        TRUNCATE TABLE [NOME_TABELA]
         
-    6.3. Drop: responsável por excluir objetos do banco de dados, sem a possibilidade de RollBack.
+        
+    5.4. Drop: responsável por excluir objetos do banco de dados, sem a possibilidade de RollBack.
             
-        DROP TABLE [NOME_TABELA]    
+        DROP TABLE bf_dept;   
    
-  7. SQL Joins
+  6. SQL Joins
      Buscas relacionamento diversas tabelas diferentes, onde e possível através das chaves relacioná-las, o retorno sempre dependente de todas as cláusulas
    e condições estabelecidas.  
      
-     7.1. INNER JOIN: obter o resultado comum entre duas tabelas, o retorno é a união/resultado comum entre as mesmas. Através das cláusulas de restrições é possível 
+     6.1. INNER JOIN: obter o resultado comum entre duas tabelas, o retorno é a união/resultado comum entre as mesmas. Através das cláusulas de restrições é possível 
    incluir regras para o retorno.   
          
           SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
@@ -159,7 +151,7 @@ Autora: Márcia P. Martins
           WHERE d.id_dept = f.id_dept
           AND d.id_dept=4;
 
-     7.2. OUTER JOIN: resultado são todos os registros que estão nas tabelas consultadas.   
+     6.2. OUTER JOIN: resultado são todos os registros que estão nas tabelas consultadas.   
          Devemos utilizar o sinal (+) ao lado da tabela onde os dados podem não existir, para que ele retorne os elementos que podem não existir.  
                    
          SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
@@ -168,14 +160,14 @@ Autora: Márcia P. Martins
          WHERE d.id_dept = f.id_dept (+);    
          Para o exemplo acima devemos entender "Mesmo que não haja funcionário, me traga as informações do departamento".  
         
-      7.3. LEFT JOIN
+      6.3. LEFT JOIN
             
             SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
             FROM bf_dept d
             LEFT JOIN bf_func f
             ON d.id_dept = f.id_dept;
       
-      7.4. RIGHT JOIN 
+      6.4. RIGHT JOIN 
       
           SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
           FROM bf_dept d
