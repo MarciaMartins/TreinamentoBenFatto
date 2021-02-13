@@ -50,8 +50,9 @@ Objetivos
     
 7. NEXT_DAY: possível calcular o próximo dia conforme parametrização.  
     SELECT id_func, nome_func, data_contratacao,
-        LAST_DAY(data_contratacao) ULTIMO_DIA_MES
+        LAST_DAY(data_contratacao, 6) ULTIMO_DIA_MES
     FROM bf_func;
+    - Parametro e o dia da semana
 
         
         
