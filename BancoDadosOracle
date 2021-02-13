@@ -140,23 +140,39 @@ Autora: Márcia P. Martins
     6.2. SavePoint: ponto de rollback, possibilitando a criação de uma marca especifica para retrono apenas de partes do processo.            
         
         TRUNCATE TABLE [NOME_TABELA]
+        
+    6.3. Drop: responsável por excluir objetos do banco de dados, sem a possibilidade de RollBack.
+            
+        DROP TABLE [NOME_TABELA]    
    
   7. SQL Joins
      Buscas relacionamento diversas tabelas diferentes, onde e possível através das chaves relacioná-las, o retorno sempre dependente de todas as cláusulas
    e condições estabelecidas.  
      
-     7.1. INNER JOIN: obter o resultado em comum entre duas tabelas, o retorno é a união/resultado comum entre as mesmas. Através das cláusulas de restrições é possível 
+     7.1. INNER JOIN: obter o resultado comum entre duas tabelas, o retorno é a união/resultado comum entre as mesmas. Através das cláusulas de restrições é possível 
    incluir regras para o retorno.   
          
           SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
           FROM bf_dept d,
                bf_func f
-          WHERE d.id_dept = f.id_dept;
+          WHERE d.id_dept = f.id_dept
+          AND d.id_dept=4;
 
+     7.2. OUTER JOIN: resultado são todos os registros que estão nas tabelas consultadas.   
+         Devemos utilizar o sinal (+) ao lado da tabela onde os dados podem não existir, para que ele retorne os elementos que podem não existir.  
+                   
+         SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
+         FROM bf_dept d,
+              bf_func f
+         WHERE d.id_dept = f.id_dept (+);    
+         Para o exemplo acima devemos entender "Mesmo que não haja funcionário, me traga as informações do departamento".  
+        
+      7.3. LEFT JOIN
+      7.4. RIGHT JOIN 
     
     
     
     Referências:
-     Material BenFatto;
+     Material apresentado durante o treinamento BenFatto; 
      https://www.devmedia.com.br/
     
