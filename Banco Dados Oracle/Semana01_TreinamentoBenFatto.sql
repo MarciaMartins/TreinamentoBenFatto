@@ -47,12 +47,15 @@ VALUES(4,'TI','MANUAUS');
 INSERT INTO bf_dept(id_dept, nome_dept,loc_dept)
 VALUES(5,'SAC','RECIFE');
 
+INSERT INTO bf_dept(id_dept, nome_dept,loc_dept)
+VALUES(6,'SAC','SP');
+
 -- aula 15.01.2021
 
 ----------------DDL  ---------
 
 -- ALTER TABLE  - ## Tabela de departamento (ITEM 5 GIT Semana01_BancoDadosOracle)
-ALTER TABLE bf_dept ADD responsavel VARCHAR2(50);  
+ALTER TABLE bf_dept ADD responsavel NUMBER(2);  
 -- ALTER -## Tabela de Funcionário 
 ALTER TABLE bf_func ADD data_contratacao DATE; 
 ALTER TABLE bf_func ADD data_desligamento DATE;
@@ -92,31 +95,35 @@ VALUES (7, 'Nome do funcionario', 6, '55555555555',to_date('01/01/2020'),to_date
 
 -- UPDATE -## Tabela de Departamento (ITEM 4.2. GIT Semana01_BancoDadosOracle)
 UPDATE bf_dept
-SET responsavel = 'MICHAEL'
-WHERE id_dept=1;
+SET responsavel = 2
+WHERE id_dept=4;
 
 UPDATE bf_dept
-SET responsavel = 'VICTORIA'
+SET responsavel = 5
 WHERE id_dept=5;
+
+UPDATE bf_dept
+SET responsavel = 1
+WHERE id_dept=1;
 
 
 -- INNER JOIN (ITEM 6.1. GIT Semana01_BancoDadosOracle)
-SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
+SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, loc_dept, d.responsavel 
 FROM bf_dept d,
      bf_func f
 WHERE d.id_dept = f.id_dept
-    AND d.id_dept=4;
+    AND d.id_dept=3;
 
 --  OUTER JOIN (ITEM 6.2. GIT Semana01_BancoDadosOracle)
-SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
+SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, loc_dept, d.responsavel 
 FROM bf_dept d,
      bf_func f
 WHERE d.id_dept = f.id_dept (+); 
 
 --  LEFT JOIN (ITEM 6.3. GIT Semana01_BancoDadosOracle)
-SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
-FROM bf_dept d
-LEFT JOIN bf_func f
+SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, loc_dept, d.responsavel 
+FROM bf_func f
+LEFT JOIN  bf_dept d
 ON d.id_dept = f.id_dept; 
 
 -- RIGHT JOIN (ITEM 6.4. GIT Semana01_BancoDadosOracle)

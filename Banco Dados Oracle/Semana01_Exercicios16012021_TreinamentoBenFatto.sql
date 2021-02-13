@@ -13,12 +13,12 @@ FROM bf_func;
 
 -- 2. Recuperar Departamento: 
 -- 2.1. Que não possui responsável
-SELECT id_dept, nome_dept, responsavel
+SELECT id_dept, nome_dept, loc_dept, responsavel
 FROM bf_dept
 WHERE responsavel is null;
 
 -- 2.1. Que possui responsável e seu nome através da tabela funcionário
-SELECT d.id_dept, d.nome_dept, d.responsavel, f.id_func, f.nome_func 
+SELECT d.id_dept, d.nome_dept, d.loc_dept, d.responsavel, f.id_func, f.nome_func 
 FROM bf_dept d,
      bf_func f
 WHERE d.responsavel = f.id_func;
