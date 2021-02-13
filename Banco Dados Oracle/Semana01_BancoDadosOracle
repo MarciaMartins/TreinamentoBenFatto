@@ -117,7 +117,7 @@ Autora: Márcia P. Martins
   5. Comandos Data Definition Language(DDL)   
     5.1. ALTER: possibilita a alteração da tabela para a inclusão de novos campos.
         5.1.1. Criação do campo responsável, o campo será uma referência a um funcionário. (## Tabela de departamento )
-          ALTER TABLE bf_dept ADD responsavel VARCHAR2(50) NULL;      
+          ALTER TABLE bf_dept ADD responsavel NUMBER(2);        
 
         5.1.2. Criação do campo data de contratação, data de desligamento do funcionário, data de nascimento, cpf. (## Tabela de Funcionário)
           ALTER TABLE bf_func ADD data_contratacao DATE; 
@@ -145,36 +145,36 @@ Autora: Márcia P. Martins
      6.1. INNER JOIN: obter o resultado comum entre duas tabelas, o retorno é a união/resultado comum entre as mesmas. Através das cláusulas de restrições é possível 
    incluir regras para o retorno.   
          
-          SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
+          SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, loc_dept, d.responsavel 
           FROM bf_dept d,
                bf_func f
           WHERE d.id_dept = f.id_dept
-          AND d.id_dept=4;
+          AND d.id_dept=3;
 
      6.2. OUTER JOIN: resultado são todos os registros que estão nas tabelas consultadas.   
          Devemos utilizar o sinal (+) ao lado da tabela onde os dados podem não existir, para que ele retorne os elementos que podem não existir.  
                    
-         SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
-         FROM bf_dept d,
+          SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, loc_dept, d.responsavel 
+          FROM bf_dept d,
               bf_func f
-         WHERE d.id_dept = f.id_dept (+);    
+          WHERE d.id_dept = f.id_dept (+);     
          Para o exemplo acima devemos entender "Mesmo que não haja funcionário, me traga as informações do departamento".  
         
       6.3. LEFT JOIN
             
-            SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
-            FROM bf_dept d
-            LEFT JOIN bf_func f
-            ON d.id_dept = f.id_dept;
+            SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, loc_dept, d.responsavel 
+            FROM bf_func f
+            LEFT JOIN  bf_dept d
+            ON d.id_dept = f.id_dept; 
       
       6.4. RIGHT JOIN 
       
-          SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
+          SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, loc_dept, d.responsavel 
           FROM bf_dept d
           RIGHT JOIN bf_func f
           ON d.id_dept = f.id_dept;
     
-    
+   
     
     Referências:
      Material apresentado durante o treinamento BenFatto; 
