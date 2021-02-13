@@ -120,6 +120,7 @@ Autora: Márcia P. Martins
         Clausula WHERE: serve para distinguir as linhas que serão atualizadas, criando uma condição para a atulização. 
         
         ALTER TABLE [NOME_TABELA] SET [NOME_CAMPO02] = [NOVO_VALOR] WHERE [NOME_CAMPO01] = VALOR;
+        *Conforme item realizado no item 4
         
     5.3. Delete: permite a exclusão de uma ou várias linhas de informações.
         Clausula WHERE: serve para distinguir as linhas que serão deletadas, criando uma condição para a atulização. 
@@ -168,7 +169,18 @@ Autora: Márcia P. Martins
          Para o exemplo acima devemos entender "Mesmo que não haja funcionário, me traga as informações do departamento".  
         
       7.3. LEFT JOIN
+            
+            SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
+            FROM bf_dept d
+            LEFT JOIN bf_func f
+            ON d.id_dept = f.id_dept;
+      
       7.4. RIGHT JOIN 
+      
+          SELECT f.nome_func, f.cpf,f.data_contratacao, d.nome_dept, d.responsavel 
+          FROM bf_dept d
+          RIGHT JOIN bf_func f
+          ON d.id_dept = f.id_dept;
     
     
     
