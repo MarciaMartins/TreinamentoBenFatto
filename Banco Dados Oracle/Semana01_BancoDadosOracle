@@ -117,7 +117,7 @@ Autora: Márcia P. Martins
   5. Comandos Data Definition Language(DDL)   
     5.1. ALTER: possibilita a alteração da tabela para a inclusão de novos campos.
         5.1.1. Criação do campo responsável, o campo será uma referência a um funcionário. (## Tabela de departamento )
-          ALTER TABLE bf_dept ADD responsavel VARCHAR2(50) NULL;      
+          ALTER TABLE bf_dept ADD responsavel NUMBER(2);        
 
         5.1.2. Criação do campo data de contratação, data de desligamento do funcionário, data de nascimento, cpf. (## Tabela de Funcionário)
           ALTER TABLE bf_func ADD data_contratacao DATE; 
