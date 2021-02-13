@@ -1,0 +1,68 @@
+TREINAMENTO BEN FATTO -  BANCO DE DADOS
+Projeto RH 
+
+Autora: Márcia P. Martins
+
+Objetivos
+    Apresentar algumas funções utilizando o banco Oracle: 1. SYSDATE; 2. TO_Char; 3. TO_DATE; 4. ADD_MONTHS; 5. MONTHS_BETWEEN
+
+
+1. SYSDATE: não recebe parâmetros e retorna a data e hora atual, conforme o padrão definido no BD. 
+    
+    SELECT sysdate FROM dual;
+    
+    * A tabela dual e uma tabela especial dedefault in Oracle. Essa tabela permite o retorno de uma informação dentro da mesma como a informação da data atual, 
+  como esta sendo utilizada nesse caso.   
+    
+2. TO_CHAR: transforma qualquer tipo de dados em texto.
+  2.1. Transformando um campo do tipo data em String
+        - Transformando data de contratação da tabela funcionario
+        SELECT nome_func, TO_CHAR(data_contratacao, 'mm/yyyy') from bf_func; 
+
+  2.2. Transformando um campo númerico em String
+       - Transformando o id do funcionário numerico de dois em uma apresentação sempre com dois campos
+        SELECT nome_func, TO_CHAR(id_func, '00') from bf_func;
+ 
+3. TO_DATE: converte um determinado texto em uma data válida
+   3.1. Calculo com campo data
+       - Utilizando essa função é possivel realizar um calculo com um data(somando, subtraindo dias)
+        SELECT TO_DATE('18/01/2015','DD-MM-YYYY') + 5 FROM DUAL;
+        
+   3.2. Subtração entre duas datas
+        SELECT TO_DATE ('30/01/2015','DD/MM/YYYY') - TO_DATE ('01/01/2015','DD/MM/YYYY') subtracao_datas FROM DUAL; 
+        
+   3.3. Formatação da data e hora 
+        SELECT TO_DATE ('30/01/2015','DD/MM/YYYY') + 6/24 data_hora FROM DUAL;      
+        
+4. ADD_MONTHS: adicionar meses a uma data conforme parâmetros informados  
+        SELECT ADD_MONTHS(sysdate,1) mes_que_vem FROM DUAL; 
+
+5. MONTHS_BETWEEN: utilizada para calcular a quantidade de meses entre duas datas. 
+    5.1. Calculo de período de datas - calcular quantos meses entre data de contratação e data atual já se passaram
+    SELECT id_func, nome_func, data_contratacao,
+      TRUNC (MONTHS_BETWEEN(SYSDATE, data_contratacao)) || ' meses' MESES
+    FROM bf_func;
+
+6. LAST DAY: retorna o última dia do mês de uma determinada data. 
+    SELECT id_func, nome_func, data_contratacao,
+      LAST_DAY(data_contratacao) ULTIMO_DIA_MES
+    FROM bf_func;
+    
+7. NEXT_DAY: possível calcular o próximo dia conforme parametrização.  
+    SELECT id_func, nome_func, data_contratacao,
+        LAST_DAY(data_contratacao) ULTIMO_DIA_MES
+    FROM bf_func;
+
+        
+        
+        
+        
+        
+        
+        
+
+Referências:
+     Material apresentado durante o treinamento BenFatto; 
+     https://www.w3schools.com/sql/default.asp
+     https://en.wikipedia.org/wiki/DUAL_table
+     https://www.devmedia.com.br/
