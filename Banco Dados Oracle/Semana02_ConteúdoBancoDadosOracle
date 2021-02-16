@@ -4,7 +4,11 @@ Projeto RH
 Autora: Márcia P. Martins
 
 Objetivos
-    Apresentar algumas funções utilizando o banco Oracle: 1. SYSDATE; 2. TO_Char; 3. TO_DATE; 4. ADD_MONTHS; 5. MONTHS_BETWEEN
+    Apresentar algumas funções utilizando o banco Oracle: 
+        Funções de datas: 1. SYSDATE; 2. TO_Char; 3. TO_DATE; 4. ADD_MONTHS; 5. MONTHS_BETWEEN; 6. LAST DAY; 7. NEXT_DAY.
+        Funções de caracteres: 8. LOWER; 9. UPPER; 10. INITCAP; 11. CONCAT; 12. LPAD; 13. RPAD; 14. INSTR; 15. LTRIM; 16. RTRIM; 17. TRIM; 18. LENGTH; 19. REPLACE. 
+        Funções Valores Numéricos: 23. NVL; 24. ROUND; 25. TRUNC; 26. MOD. 
+        Funções de Grupo: 27. AVG; 28. COUNT; 29. MAX; 30. MIN; 31. SUM; 32. GROUP BY.
 
 
 1. SYSDATE: não recebe parâmetros e retorna a data e hora atual, conforme o padrão definido no BD. 
@@ -53,7 +57,108 @@ Objetivos
         LAST_DAY(data_contratacao, 6) ULTIMO_DIA_MES
     FROM bf_func;
     - Parametro e o dia da semana
+    
+8. LOWER: transforma todos os caracteres em minúsculo.
+    SELECT LOWER(f.nome_func), LOWER(d.nome_dept)
+    FROM bf_func f
+    INNER JOIN bf_dept d
+    ON f.id_dept = d.id_dept; 
+   
+9. UPPER: transforma todos os caracteres em maiúsculo.
+    SELECT UPPER(f.nome_func), UPPER(d.nome_dept)
+    FROM bf_func f
+        INNER JOIN bf_dept d
+        ON f.id_dept = d.id_dept
+    WHERE UPPER(d.nome_dept) = UPPER('Financeiro');
 
+ 10. INITCAP: transforma o primeiro caracter em maiuscula e as demais em minúsculo.
+    SELECT INITCAP(f.nome_func), INITCAP(d.nome_dept)
+    FROM bf_func f
+        INNER JOIN bf_dept d
+        ON f.id_dept = d.id_dept
+    WHERE UPPER(d.nome_dept) = UPPER('Financeiro');
+
+11. CONCAT: concatenar
+    SELECT CONCAT(f.data_contratacao, INITCAP(f.nome_func)), d.nome_dept 
+    FROM bf_func f
+        INNER JOIN bf_dept d
+        ON f.id_dept = d.id_dept
+    ORDER BY f.data_contratacao;
+
+12. LPAD:incluir caracteres a esquerda do campo.
+        SELECT LPAD(f.id_func,5,'0'),
+               INITCAP(f.nome_func), 
+               LPAD(f.cpf,11,'0')    
+        FROM bf_func f;
+
+13. RPAD: incluir os espaços a direita do campo. 
+    SELECT CONCAT(LPAD(f.id_func,5,'0'),INITCAP(f.nome_func)),  
+        RPAD(f.cpf,20,'0') 
+    FROM bf_func f
+        INNER JOIN bf_dept d
+        ON f.id_dept = d.id_dept;
+
+14. INSTR: localizar um fragmento do texto dentro da String. Retornando o número que indica a primeira posição que foi encontrado no fragmento procurado.
+        SELECT INITCAP(f.nome_func), UPPER(d.nome_dept),
+           INSTR(UPPER(f.nome_func), 'FUNC')
+        FROM bf_func f
+            INNER JOIN bf_dept d
+            ON f.id_dept = d.id_dept;
+           
+15. LTRIM: retira os espaços em branco a esquerda do campo.
+        SELECT INITCAP(f.nome_func), 
+           LTRIM(f.nome_func)
+        FROM bf_func f
+        INNER JOIN bf_dept d
+        ON f.id_dept = d.id_dept;
+        
+16. RTRIM: retira os espaços em branco a direita do campo.
+    SELECT INITCAP(f.nome_func), 
+       RTRIM(f.nome_func)
+    FROM bf_func f
+        INNER JOIN bf_dept d
+        ON f.id_dept = d.id_dept;
+
+17. TRIM: retira os espaços em branco, antes e depois do campo. 
+
+18. LENGTH: obtenho a quantidade de caracteres ocupado em determinado campo.
+    SELECT LENGTH(f.cpf),  
+       LENGTH(RPAD(f.cpf,20,'0')) 
+    FROM bf_func f; 
+
+19. REPLACE: permite alterar um caracter especifico por outro parametrizado.
+    SELECT nome_func, REPLACE(TO_CHAR(RPAD(cpf,11,'0'), '999g999g999g99'),'.','-')from bf_func;
+    
+23. NVL: tratativa caso encontrar um valor nulo no campo e possível substituir conforme valor parametrizado. 
+        SELECT id_func, nome_func, NVL(salario_func,0), status_func
+        FROM bf_func
+        WHERE status_func = 'S';
+        
+24. ROUND: arrendondamento o valor para retirar as casas decimais, obedecendo a regra de arredondamento.
+    SELECT id_func, nome_func, status_func, NVL(salario_func,0), ROUND(salario_func)
+    FROM bf_func
+    WHERE status_func = 'S';
+    
+
+25. TRUNC: arrendondamento será realizado apenas desconsiderando as casas decimais. 
+    SELECT id_func, nome_func, status_func, NVL(salario_func,0), ROUND(salario_func), TRUNC(salario_func)
+    FROM bf_func
+    WHERE status_func = 'S';
+    
+    Porém, também e possível determinar quantas casas para definir o trunc (round e trunc).
+    SELECT id_func, nome_func, status_func, NVL(salario_func,0), ROUND(salario_func, 1), TRUNC(salario_func,1)
+        FROM bf_func
+    WHERE status_func = 'S';
+
+26. MOD: verificar o resto da divisão.
+    SELECT mod(13,2) FROM DUAL;
+
+ 27. AVG: 
+ 28. COUNT: 
+ 29. MAX: 
+ 30. MIN: 
+ 31. SUM: 
+ 32. GROUP BY:.
         
         
         
