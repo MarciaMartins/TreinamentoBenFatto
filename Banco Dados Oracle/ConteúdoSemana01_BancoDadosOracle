@@ -174,9 +174,12 @@ Autora: Márcia P. Martins
           RIGHT JOIN bf_func f
           ON d.id_dept = f.id_dept;
     
+    Scripts e Exercicios de aplicação do conteúdo: https://github.com/MarciaMartins/TreinamentoBenFatto/tree/main/Banco%20Dados%20Oracle/Semana%2001
    
     
     Referências:
      Material apresentado durante o treinamento BenFatto; 
      https://www.devmedia.com.br/
+     
+     
     
