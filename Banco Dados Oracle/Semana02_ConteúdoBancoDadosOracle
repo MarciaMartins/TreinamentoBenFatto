@@ -153,13 +153,43 @@ Objetivos
 26. MOD: verificar o resto da divisão.
     SELECT mod(13,2) FROM DUAL;
 
- 27. AVG: 
- 28. COUNT: 
- 29. MAX: 
- 30. MIN: 
- 31. SUM: 
- 32. GROUP BY:.
+ 27. AVG:retorna a média baseada nas parametros informados. 
+        SELECT TRUNC(AVG(salario_func),2)
+           FROM bf_func;
         
+ 28. COUNT: contador de registro da tabela. 
+        SELECT count(*)
+            FROM bf_func;
+
+         SELECT count(*)
+            FROM bf_func
+         WHERE id_dept=4;
+ 
+ 29. MAX: maior valor dentro os valores dos campos solicitados.
+        SELECT TRUNC(AVG(salario_func),2), MAX(salario_func)
+           FROM bf_func
+        WHERE id_dept=5;
+ 
+ 30. MIN:menor valor dentro os valores dos campos solicitados.  
+        SELECT TRUNC(AVG(salario_func),2), MAX(salario_func), MIN(salario_func)
+            FROM bf_func
+        WHERE id_dept=5;
+
+ 31. SUM: retorna a somo de todos os valores dos campos solitaidos
+        SELECT TRUNC(AVG(salario_func),2), MAX(salario_func), MIN(salario_func), SUM(salario_func)
+            FROM bf_func
+        WHERE id_dept=5;
+    
+ 32. GROUP BY: agrupamento de informações.
+        SELECT id_dept, TRUNC(AVG(salario_func),2), MAX(salario_func), MIN(salario_func)
+            FROM bf_func
+        GROUP BY id_dept;
+        
+        SELECT d.nome_dept, TRUNC(AVG(f.salario_func),2), MAX(f.salario_func), MIN(f.salario_func)
+            FROM bf_func f,
+                 bf_dept d
+         WHERE f.id_dept=d.id_dept     
+         GROUP BY f.id_dept, d.nome_dept;
         
         
         
