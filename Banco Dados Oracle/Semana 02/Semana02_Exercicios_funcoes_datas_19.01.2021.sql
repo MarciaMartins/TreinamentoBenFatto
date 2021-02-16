@@ -44,6 +44,13 @@ SELECT id_tabela, din_texto, din_num, data_texto, data_num,
     NEXT_DAY(data_num, 4) FIM_CONTRATO_EXPERIENCIA
 FROM testes_funcoes;
 
+-- 7. NEXT_DAY
+SELECT id_tabela, din_texto, din_num, data_texto, data_num, 
+    NEXT_DAY(data_num, 4) FIM_CONTRATO_EXPERIENCIA
+FROM testes_funcoes;
+
+
+
 -- detalhamento das tabelas
 DESC testes_funcoes;
 SELECT * FROM testes_funcoes;
