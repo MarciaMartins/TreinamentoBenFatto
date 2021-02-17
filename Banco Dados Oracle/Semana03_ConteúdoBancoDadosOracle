@@ -1,0 +1,67 @@
+TREINAMENTO BEN FATTO -  BANCO DE DADOS
+Projeto RH 
+
+Autora: Márcia P. Martins
+
+Objetivos:
+    1. Store Procedures;
+    2. Functions;
+    3. Views;
+    4. Sequences;
+    5. Triggers;
+    6. Packages
+    
+    
+Objetos de Banco de Dados    
+    
+1. Store Procedures
+  - É um agrupamento de comandos executando determinada tarefa e podem ser invocados por nome. Comandos permitem manipular os dados ou consulta-lós. 
+  
+                            -- cabeçalho da procedure
+                            CREATE OR REPLACE PROCEDURE consulta
+                            (v_cod_empregado in emp.empno%type,
+                             v_nome_empregado out emp.ename%type
+                            )
+                            --corpo da procedure
+                            IS
+                            BEGIN
+                              SELECT ename
+                              INTO v_nome_empregado 
+                              FROM emp
+                              WHERE empno= v_cod_empregado;
+                            END consulta; 
+    
+  - Pontos importantes
+    emp.empno%type = torno o campo mais flexível em alguma situação que o mesmo mude de tipo;
+    
+    in = campo de entrada na procedure;
+    out = saída esperada após a execução da procedure. 
+    
+  - Forma de chamar as procedures:
+    Através do SQL *Plus: SQL> EXECUTE proc_teste;
+    Através do bloco: BEGIN proc_teste; END;
+    
+                      create or replace PROCEDURE teste_ctt (
+                                      v_id_func IN bf_func.id_func%TYPE,
+                                      v_nome_func OUT bf_func.nome_func%TYPE,
+                                      v_salario_func OUT bf_func.salario_func%TYPE
+                      )
+                      IS
+                          BEGIN
+                             SELECT f.nome_func, f.salario_func  
+                               INTO v_nome_func, v_salario_func  
+                             FROM bf_func f 
+                             WHERE f.id_func=v_id_func;
+                      END teste_ctt;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  
