@@ -5,6 +5,7 @@ Autora: Márcia P. Martins
 
 Objetivos:
     1. Store Procedures;
+        1.1. CURSOR;
     2. Functions;
     3. Views;
     4. Sequences;
@@ -55,8 +56,105 @@ Objetos de Banco de Dados
                       END teste_ctt;
     
     
+    1.1. CURSOR: trabalhar com várias linhas da tabela dentro de uma PROCEDURE.
     
+                CURSOR NOME_CURSOR IS
+                SELECT [CAMPO_TABELA]
+                FROM [NOME_TABELA]
+                WHERE [CAMPO_TABELA] = condição;
+                
+                create or replace PROCEDURE soma_salario(v_status  IN bf_func.status_func%type,
+                                    v_soma out NUMBER)    
+                IS
+                -- CURSOR
+                  CURSOR C_BUSCA_STATUS IS
+                  SELECT NVL(salario_func,0) salario_func
+                    FROM bf_func
+                    WHERE status_func = v_status;
+
+                  n_soma_sal number;
+
+                        BEGIN
+                          n_soma_sal :=0;
+
+                          FOR r_BuscaStatus IN C_BUSCA_STATUS LOOP
+                            n_soma_sal := n_soma_sal + r_BuscaStatus.salario_func; 
+
+                          END LOOP;
+
+                          v_soma := n_soma_sal;
+
+                        EXCEPTION
+                           WHEN OTHERS THEN
+                             raise;
+
+                END soma_salario;
+                
     
+    2. Functions: função é um bloco PL/SQL muito semelhante a uma procedure, porém com a obrigatóriedade de retornar valores. 
+    
+            CREATE [O REPLACE] FUNCTION function_name ([parameter_name] [IN, OUT, IN OUT] TYPE [])
+            RETURN return_datatype
+            IS/AS
+            
+            BEGIN 
+                <FUNCTION_BODY>
+            END [function_name];
+            
+            
+            CREATE OR REPLACE FUNCTION RETURN_NAME (p_i_id_func IN bf_func.id_func%TYPE)
+
+            RETURN VARCHAR2 
+            IS
+
+            p_o_nome_func VARCHAR2(50);
+
+            BEGIN
+                SELECT nome_func
+                INTO p_o_nome_func
+                FROM bf_func
+                WHERE id_func = p_i_id_func;
+
+                RETURN p_o_nome_func;
+
+            EXCEPTION
+                WHEN OTHERS THEN
+                    RETURN (null);
+
+            END RETURN_NAME;
+        
+    3. Views: tabela virtual, pois suas linhas e colunas são criadas em tempo de execução e fica disponibilizada em memória para acesso por uma query.
+                CREATE [OR REPLACE] VIEWS AS [with read only]
+                
+                CREATE VIEW ESTOQUE AS
+                    SELECT [CAMPO01], [CAMPO02]
+                        FROM [NOME_TABELA]
+                    WHERE [CAMPO] = PARAMETRO; 
+    
+    4. Sequences: objeto utilizado para o incremento automático e sequêncial da chave númerica de controle do banco (PK), tirando a responsabilidade do desenvolvedor de 
+         o controle da dessa chave. 
+         
+            CREATE SEQUENCE [nome_tabela]
+            MINVALUE [valor_min]
+            MAXVALUE [valor_max]
+            START WITH [valor_inicial]
+            INCREMENTE BY [valor_incremento]
+            
+            - Número da SEQUENCE valor atual da tabela
+                SELECT BF_SEQ_DEPT.CURRVAL FROM dual;
+            - Número da SEQUENCE próximo valor da tabela    
+                SELECT BF_SEQ_DEPT.nextval FROM dual;
+            
+         
+    5. Triggers: execução automatica de procedimento, quando uma tabela que possui definição de triggre tiver algum tipo de manipulação de dados.
+        Exemplo e a criação tabela de log. 
+        - Pontos importantes:
+           1. Quando a triggers será disparada;
+           2. Qual evento será monitorado;
+           3. Quantas vezes será executado, por linha ou por instrução;
+           4. Corpo da trigger.
+           
+  6. Packages: pacote de encapsulamento de objetos (procedures, funções, outros). Composto de SPEC e Body
     
     
     
