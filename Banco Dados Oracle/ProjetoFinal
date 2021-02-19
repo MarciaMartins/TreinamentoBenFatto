@@ -1,0 +1,24 @@
+Segue o enunciado desse último exercíco de BD
+•Desenhar a Modelagem do RH:
+•Tabela de Funcionários;
+•Tabela de Departamentos;
+•Tabela de Benefícios.
+
+•Criar uma PKG do RH, ele deve:
+•Possuir um procedimento para:
+  •Inserir, atualizar e deletar Departamento
+•Possuir um procedimento para:
+  •Inserir, atualizar e deletar Funcionário
+•Possuir um procedimento para:
+  •Inserir, atualizar e deletar Benefícios
+•Possuir um procedimento para:
+  •Atribuir Benefícios ao Funcionário
+
+•Possuir funções para:
+•Calcular :
+  •o tempo de casa do funcionário Ativo;
+  •A Média de salário de determinado departamento
+  •O Maior Salário da Empresa;
+  •O Menor Salário da Empresa;
+  •O valor total dos benefícios do Funcionário;
+  •As alterações nas tabelas de funcionário e Departamento devem ser logadas
